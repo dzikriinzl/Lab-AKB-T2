@@ -43,7 +43,6 @@ export default function Index() {
       >
         <Text
           style={{
-            fontSize: 20,
             color: "white",
           }}
         >
