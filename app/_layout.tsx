@@ -7,47 +7,49 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        gap: 20,
-        backgroundColor: "white",
       }}
     >
+
       <View
         style={{
-
+          width: 0,
+          height: 0,
           borderLeftWidth: 40,
           borderRightWidth: 40,
           borderBottomWidth: 70,
           borderLeftColor: "transparent",
           borderRightColor: "transparent",
-          borderBottomColor: "red",
+          borderBottomColor: "green",
+          backgroundColor: "transparent",
+          marginBottom: 20,
         }}
       />
 
       <View
         style={{
-          backgroundColor: "red",
-          borderRadius: 50,
-          paddingHorizontal: 20,
-          paddingVertical: 10,
+          width: 180,
+          height: 50,
+          backgroundColor: "yellow",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 20,
         }}
       >
-        <Text style={{ color: "white" }}>105841109622</Text>
+        <Text style={{ fontWeight: "bold", color: "black" }}>Fauzan Azhari Rahman</Text>
       </View>
 
       <View
         style={{
-          paddingHorizontal: 20,
-          paddingVertical: 10,
-          backgroundColor: "red",
+          width: 80,
+          height: 180,
+          backgroundColor: "brown",
+          borderRadius: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 20,
         }}
       >
-        <Text
-          style={{
-            color: "white",
-          }}
-        >
-          Fauzan Azhari Rahman
-        </Text>
+        <Text style={{ color: "white", fontSize: 10 }}>1058411096322</Text>
       </View>
 
     </View>
