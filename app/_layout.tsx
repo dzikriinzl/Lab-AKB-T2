@@ -13,20 +13,15 @@ export default function Index() {
     >
       <View
         style={{
-          paddingHorizontal: 20,
-          paddingVertical: 10,
-          backgroundColor: "red",
+
+          borderLeftWidth: 40,
+          borderRightWidth: 40,
+          borderBottomWidth: 70,
+          borderLeftColor: "transparent",
+          borderRightColor: "transparent",
+          borderBottomColor: "red",
         }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "white",
-          }}
-        >
-          Fauzan Azhari Rahman
-        </Text>
-      </View>
+      />
 
       <View
         style={{
@@ -41,15 +36,20 @@ export default function Index() {
 
       <View
         style={{
-
-          borderLeftWidth: 40,
-          borderRightWidth: 40,
-          borderBottomWidth: 70,
-          borderLeftColor: "transparent",
-          borderRightColor: "transparent",
-          borderBottomColor: "red",
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          backgroundColor: "red",
         }}
-      />
+      >
+        <Text
+          style={{
+            fontSize: 20,
+            color: "white",
+          }}
+        >
+          Fauzan Azhari Rahman
+        </Text>
+      </View>
 
     </View>
   );
