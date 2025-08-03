@@ -6,7 +6,7 @@ Proyek ini adalah aplikasi React Native sederhana yang menampilkan tiga bentuk g
 
 Aplikasi ini akan menampilkan tampilan seperti berikut:
 
-![Preview](assets/images/hasil.png)
+![Preview](assets/images/hasilbuil.png)
 
 ---
 
@@ -31,7 +31,7 @@ expo-farr/
 
 │   └── images/
 
-│       └── hasil.png
+│       └── hasilbuil.png
 
 ├── app/
 
