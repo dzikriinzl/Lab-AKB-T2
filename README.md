@@ -78,8 +78,8 @@ Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
 
 1.  **Kloning repositori:**
     ```bash
-    git clone <URL-repositori>
-    cd "LAB-AKB-T1 (COPY)"
+    git clone https://github.com/dzikriinzl/Lab-AKB-T2.git
+    cd "LAB-AKB-T2"
     ```
 
 2.  **Instal dependensi:**
