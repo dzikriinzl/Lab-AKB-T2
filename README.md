@@ -22,7 +22,7 @@ LAB-AKB-T2
 
 │   ├── components/
 
-│   │   └── animeimages.tsx  
+│   │   └── InteractiveImage.tsx  
 
 │   ├── _layout.tsx          
 
