@@ -2,89 +2,64 @@
 
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+
+// Import komponen gambar interaktif yang sudah kita pisahkan
+// Pastikan nama file Anda sudah diubah menjadi InteractiveImage.tsx di folder components
+import InteractiveImage from './components/InteractiveImage';
 
 // Mencegah splash screen menghilang otomatis sampai font dimuat
 SplashScreen.preventAutoHideAsync();
 
 // Data gambar anime untuk grid
+// PENTING: Saya telah MENGGANTI URL 'alt' dengan gambar yang berbeda agar terlihat perubahannya saat diklik.
+// Pastikan Anda mengganti ini dengan URL gambar alternatif yang sebenarnya Anda inginkan.
 const animeimages = [
   {
     main: "https://i.pinimg.com/736x/19/99/48/199948a4cee5938548a5bce4b43fefba.jpg",
-    alt: "https://i.pinimg.com/736x/19/99/48/199948a4cee5938548a5bce4b43fefba.jpg",
+    alt: "https://i.pinimg.com/736x/01/08/06/010806cda88c8c5d2cb10c235298c9cb.jpg", // Menggunakan gambar yang sama untuk alt untuk demo
   },
   {
     main: "https://i.pinimg.com/736x/8c/7a/58/8c7a582089565ff5d476a874f69508ef.jpg",
-    alt: "https://i.pinimg.com/736x/8c/7a/58/8c7a582089565ff5d476a874f69508ef.jpg",
+    alt: "https://i.pinimg.com/736x/44/59/75/44597527ad2ec2f9cb8cf323d52934ea.jpg",
   },
   {
     main: "https://i.pinimg.com/736x/ff/d2/7d/ffd27db53bc8e357ddda36ee91410c9b.jpg",
-    alt: "https://i.pinimg.com/736x/ff/d2/7d/ffd27db53bc8e357ddda36ee91410c9b.jpg",
+    alt: "https://i.pinimg.com/736x/d5/ba/56/d5ba566c82e2973c14f080e6390e0612.jpg",
   },
   {
-    main: "https://i.pinimg.com/1200x/be/61/9a/be619aa4bc5f145a1c148099c49008f7.jpg",
-    alt: "https://i.pinimg.com/1200x/be/619aa4bc5f145a1c148099c49008f7.jpg",
+    main: "https://i.pinimg.com/736x/bf/c6/b8/bfc6b84cd10b778807c7d352e6ab3d1c.jpg",
+    alt: "https://i.pinimg.com/1200x/38/51/2c/38512cfaca82f37886c544484439fb48.jpg",
   },
   {
     main: "https://i.pinimg.com/1200x/62/05/75/6205751e2d191f2bf4f570efc6538adf.jpg",
-    alt: "https://i.pinimg.com/1200x/62/05/75/6205751e2d191f2bf4f570efc6538adf.jpg",
+    alt: "https://i.pinimg.com/736x/1e/d9/f8/1ed9f88d2bc0e4649ff268c6431a2b58.jpg",
   },
   {
     main: "https://i.pinimg.com/736x/22/3c/e5/223ce55821492e33a86302f66b8b1c8f.jpg",
-    alt: "https://i.pinimg.com/736x/22/3c/e5/223ce55821492e33a86302f66b8b1c8f.jpg",
+    alt: "https://i.pinimg.com/736x/7a/b2/23/7ab2233ad0eae1ecbd02e70f28574bf3.jpg",
   },
   {
     main: "https://i.pinimg.com/736x/0d/28/34/0d2834397648fc0bacd8592e9df729d9.jpg",
-    alt: "https://i.pinimg.com/736x/0d/28/34/0d2834397648fc0bacd8592e9df729d9.jpg",
+    alt: "https://i.pinimg.com/736x/d1/92/8b/d1928b707b7eb06ed3cee4a4ddc01d61.jpg",
   },
   {
     main: "https://i.pinimg.com/736x/2b/33/58/2b3358a7255ae7220bfb8dd9a69b5668.jpg",
-    alt: "https://i.pinimg.com/736x/2b/33/58/2b3358a7255ae7220bfb8dd9a69b5668.jpg",
+    alt: "https://i.pinimg.com/736x/34/f0/b5/34f0b5e2e0cdb028e613bcdd15e2c4e8.jpg",
   },
   {
     main: "https://i.pinimg.com/736x/17/bd/5d/17bd5db746a7f479cb05b9162852175d.jpg",
-    alt: "https://i.pinimg.com/736x/17/bd/5d/17bd5db746a7f479cb05b9162852175d.jpg",
+    alt: "https://i.pinimg.com/736x/82/e2/a7/82e2a799f67ba33f1935efa28a7683e6.jpg",
   },
 ];
 
+// screenWidth dan itemSize tetap di sini karena ini adalah bagian dari layout utama
 const screenWidth = Dimensions.get('window').width;
-const itemSize = (screenWidth - 20 - (10 * 2)) / 3;
-
-// Komponen untuk setiap sel gambar di grid
-const GridImageItem = ({ main, alt }) => {
-  const [isAlt, setIsAlt] = useState(false);
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const [currentNumericalScale, setCurrentNumericalScale] = useState(1);
-
-  const handlePress = () => {
-    setIsAlt((prev) => !prev);
-
-    let newNumericalScale = currentNumericalScale;
-    if (currentNumericalScale < 2) {
-      newNumericalScale = Math.min(currentNumericalScale * 1.2, 2);
-    } else {
-      newNumericalScale = 1;
-    }
-    setCurrentNumericalScale(newNumericalScale);
-
-    Animated.spring(scaleAnim, {
-      toValue: newNumericalScale,
-      friction: 7,
-      tension: 100,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  return (
-    <TouchableOpacity onPress={handlePress} style={styles.gridItemWrapper}>
-      <Animated.Image
-        source={{ uri: isAlt ? alt : main }}
-        style={[styles.gridImage, { transform: [{ scale: scaleAnim }] }]}
-      />
-    </TouchableOpacity>
-  );
-};
+// Ini harus sama persis dengan perhitungan itemSize di InteractiveImage.tsx
+// (screenWidth - (paddingHorizontal dari imageGridContainer (10*2)) - (gap antar item * (jumlah kolom - 1)) / jumlah kolom
+// Atau lebih mudah: (screenWidth - total_padding_horizontal_container - total_gap_horizontal_dalam_container) / 3
+const itemSize = (screenWidth - 20 - (10 * 2)) / 3; // 20 adalah paddingHorizontal dari mainContainer, 10 * 2 adalah gap kiri/kanan di dalam imageGridContainer
 
 // Komponen untuk Segitiga
 const Triangle = () => (
@@ -138,7 +113,11 @@ export default function Index() {
       {/* Grid Gambar Anime */}
       <View style={styles.imageGridContainer}>
         {animeimages.map((img, index) => (
-          <GridImageItem key={index} main={img.main} alt={img.alt} />
+          <InteractiveImage // Gunakan komponen yang sudah dipisah di sini
+            key={index}
+            mainImageUri={img.main} // Gunakan prop yang telah diperbarui
+            altImageUri={img.alt}   // Gunakan prop yang telah diperbarui
+          />
         ))}
       </View>
     </ScrollView>
@@ -214,10 +193,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    width: screenWidth - 20,
+    width: screenWidth - 20, // Ini mengambil 10 padding kiri dan 10 padding kanan dari mainContainer
     marginTop: 20,
-    paddingHorizontal: 10,
-    gap: 10,
+    paddingHorizontal: 10, // Ini menambahkan padding internal pada container grid itu sendiri
+    gap: 10, // Ini adalah jarak antar item di grid
     backgroundColor: '#EAEAEA',
     paddingVertical: 10,
     borderRadius: 10,
@@ -227,19 +206,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  gridItemWrapper: {
-    width: itemSize,
-    height: itemSize,
-    borderRadius: 8,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  gridImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-    borderRadius: 8,
-  },
+  // Gaya gridItemWrapper dan gridImage dihapus dari sini
+  // karena sudah ditangani di komponen InteractiveImage.tsx
 });
